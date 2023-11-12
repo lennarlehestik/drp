@@ -1,38 +1,210 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  --dot-bg: #F8FAFB;
+  --dot-color: #F1F3F4;
+  --dot-size: 5px;
+  --dot-space: 22px;
+	background:
+		linear-gradient(90deg, var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
+		linear-gradient(var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
+		var(--dot-color);
   min-height: 100vh;
+  padding-top:80px;
+  padding-bottom:50px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
+  width:100%;
+  box-sizing: border-box;
 }
 
-.App-link {
-  color: #61dafb;
+body {
+
 }
 
-@keyframes App-logo-spin {
-  from {
+.claimcards{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width:100%;
+  gap:10px;
+}
+
+.sheetdelete{
+  position:absolute;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  border-radius:10px;
+  opacity:0;
+  background-color: #C41C1C;
+  color:white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:0.2s;
+  font-weight: 700;
+}
+
+.sheetdelete:hover{
+  opacity:0.7;
+  cursor:pointer;
+}
+
+.navigation{
+  position:absolute;
+  top:15px;
+  right: 15px;
+  display: flex;
+  gap:10px;
+}
+
+.select-add{
+  width:100%;
+  display: flex;
+  flex-direction: row;
+  gap:10px;
+}
+.added-buttons{
+  width:100%;
+  display: flex;
+  flex-direction: row;
+  gap:10px;
+  flex-wrap: wrap;
+}
+
+.claimCardWrapper{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap:10px;
+}
+
+.card{
+  gap:10px;
+  width:40vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.contentCard{
+  width:50vw;
+}
+
+
+
+.buttons{
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  width:100%;
+  gap:10px;
+}
+
+.assistantButton{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  z-index:100;
+}
+
+
+.dropzone {
+  border: 1px dashed #ccc;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  width:100%;
+  box-sizing: border-box;
+  height:100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:20px;
+}
+
+.dropzone.drag-active {
+  border-color: #007bff;
+  background-color: #f3f3f3;
+}
+
+.addClaimType{
+  display: flex;
+  flex-direction: row;
+  gap:10px;
+  align-items: center;
+  justify-content: center;
+  width:100%;
+}
+
+
+
+@media screen and (max-width: 600px) {
+  .card{
+    width:80vw;
+  }
+  .contentCard{
+    width:90vw;
+  }
+}
+
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  border: 3px solid;
+  border-color: #007bff #007bff transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loader::after {
+  content: '';  
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border: 3px solid;
+  border-color: transparent #007bff #007bff;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  animation: rotationBack 0.5s linear infinite;
+  transform-origin: center center;
+}
+
+@keyframes rotation {
+  0% {
     transform: rotate(0deg);
   }
-  to {
+  100% {
     transform: rotate(360deg);
   }
+} 
+    
+@keyframes rotationBack {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+    
+
+.allCasesMenu{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
