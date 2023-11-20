@@ -183,7 +183,7 @@ function AcceptCaseView() {
     <Card className="card">
     <Typography level="title-lg" sx={{width:"100%"}}>Accept the accusations</Typography>
     <Typography component="body-sm" sx={{width:"100%"}}>
-      If you accept the accusations, the case will be closed and you agree to the claims made against you. If you haven't, then you will also pay the deposit of {caseView?.deposit_for_respondent}.
+      If you accept the accusations, the case will be closed and you agree to the claims made against you. You will also pay the deposit of {caseView?.deposit_for_respondent}.
     </Typography>
     <Button sx={{width:"100%"}} onClick={()=>acceptCase()}>Accept accusations</Button>
     </Card>

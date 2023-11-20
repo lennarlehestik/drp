@@ -31,8 +31,8 @@ function GiveVerdict() {
   const [formData, setFormData] = useState({
     ipfsProof:[],
     verdict_for: "",
-    fine: "0.0000 EOS",
-    relief: "0.0000 EOS",
+    fine: "0",
+    relief: "0",
     suspension: 0,
     verdict_info: "",
     banselected: false,
@@ -52,11 +52,13 @@ function GiveVerdict() {
       lead_arbitrator: accountName,
       community: community,
       case_id: caseView?.case_id,
-      fine_verdict: [formData?.fine],
-      relief_verdict: [formData?.relief],
+      fine_verdict: [Number(formData?.fine).toFixed(4) + " EOS"],
+      relief_verdict: [Number(formData?.relief).toFixed(4) + " EOS"],
       suspension_verdict: [formData?.suspension],
       verdict_description: formData?.verdict_info,
       ipfs_cid_verdict: formData?.ipfsProof,
+      ban_verdict: formData?.banselected
+
     })
     if (activeUser) {
       try {
@@ -77,11 +79,12 @@ function GiveVerdict() {
                 lead_arbitrator: accountName,
                 community: community,
                 case_id: caseView?.case_id,
-                fine_verdict: [formData?.fine],
-                relief_verdict: [formData?.relief],
+                fine_verdict: [Number(formData?.fine).toFixed(4) + " EOS"],
+                relief_verdict: [Number(formData?.relief).toFixed(4) + " EOS"],
                 suspension_verdict: [formData?.suspension],
                 verdict_description: formData?.verdict_info,
                 ipfs_cid_verdict: formData?.ipfsProof,
+                ban_verdict: formData?.banselected
               },
             },
           ],
@@ -112,7 +115,7 @@ function GiveVerdict() {
     <>
     <div className="contentCard">
     <>
-      <Card className="contentCard">
+      <Card>
         <Typography level="title-lg">Verdict for case: #{caseView?.number}</Typography>
         <Typography level="title-md">Case summary</Typography>
         <Typography sx={{marginBottom:"-8px"}} level="title-sm">{caseView?.claimant_name} claims against {caseView?.respondents_account}:</Typography>
@@ -166,7 +169,8 @@ function GiveVerdict() {
           startDecorator={'EOS'}
           sx={{width:"100%"}}
           onChange={(e) => setFormData({ ...formData, fine: e.target.value })}
-          value={formData?.fine || "0.0000 EOS"}
+          value={formData?.fine}
+          type="number"
         />
         <Typography sx={{marginBottom:"-8px"}} level="title-sm">Relief amount</Typography>
         <Input
@@ -174,7 +178,8 @@ function GiveVerdict() {
           startDecorator={'EOS'}
           sx={{width:"100%"}}
           onChange={(e) => setFormData({ ...formData, relief: e.target.value })}
-          value={formData?.relief || "0.0000 EOS"}
+          value={formData?.relief}
+          type="number"
         />
         <Typography sx={{marginBottom:"-8px"}} level="title-sm">Suspension days</Typography>
         <Input
@@ -182,7 +187,8 @@ function GiveVerdict() {
           startDecorator={'Days'}
           sx={{width:"100%"}}
           onChange={(e) => setFormData({ ...formData, suspension: e.target.value })}
-          value={formData?.suspension || 0}
+          value={formData?.suspension}
+          type="number"
         />
         <Typography component="label" sx={{width:"100%"}} endDecorator={<Switch checked={formData?.banselected} name="banselected" sx={{ ml: 1 }} onChange={(e) => setFormData(prevState => ({ ...prevState, banselected: !formData.banselected }))}/>}>
           Ban:

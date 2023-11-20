@@ -74,8 +74,8 @@ function BecomeArbitrator() {
   }
 
   return (
-    <>
-      <Card sx={{width:"50vw"}}>
+    <div className="contentCard">
+      <Card>
         <Typography level="h4">Become arbitrator</Typography>
         <Typography sx={{marginBottom:"-8px"}} level="title-sm">Name</Typography>
           <Input 
@@ -100,7 +100,7 @@ function BecomeArbitrator() {
           <Typography sx={{width:"100%", textAlign:"center"}} level="title-lg">Please write us on <a target="_blank" href="https://t.me/MoZDS">Telegram</a> to apply.</Typography>
        
       </Card>
-    </>
+    </div>
   );
 }
 export default BecomeArbitrator;

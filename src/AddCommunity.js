@@ -92,7 +92,8 @@ function AddCommunity() {
                 time_for_arb_to_accept_the_case: 1,
                 time_for_respondent_to_acknowledge_the_case: 1,
                 time_for_respondent_to_respond_the_case: 1,
-                drpapp_cut: 1
+                drpapp_cut: 1,
+                time_for_arbitrators_to_give_verdict: 1
               },
             },
           ],
@@ -123,8 +124,8 @@ function AddCommunity() {
   }
 
   return (
-    <>
-      <Card sx={{width:"50vw"}}>
+    <div className="contentCard">
+      <Card>
         <Typography level="h4">Add new community</Typography>
         <Typography sx={{marginBottom:"-8px"}} level="title-sm">Community contract</Typography>
           <Input 
@@ -242,7 +243,7 @@ function AddCommunity() {
           <Button onClick={()=>createCommunity()}>Create community</Button>
        
       </Card>
-    </>
+    </div>
   );
 }
 export default AddCommunity;

@@ -30,12 +30,24 @@ function CaseView() {
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
 
-    // Calculate difference in days
-    const diffTime = Math.abs(now - date);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    // Calculate difference in milliseconds
+    const diffTime = now - date;
 
-    return `${diffDays} days ago (${year}/${month}/${day}, ${hours}:${minutes} UTC)`;
-  }
+    // Calculate difference in days
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    let timeAgo = '';
+    if (diffDays > 1) {
+        timeAgo = `${diffDays} days ago`;
+    } else if (diffDays === 1) {
+        timeAgo = `1 day ago`;
+    } else {
+        timeAgo = '0 days ago';
+    }
+
+    return `${timeAgo} (${year}/${month}/${day}, ${hours}:${minutes} UTC)`;
+}
+
 
   const signVerdict = async () =>{
     console.log(             {
@@ -184,6 +196,7 @@ function CaseView() {
         </Typography>
         <Typography sx={{marginBottom:"-8px"}} level="title-sm">Claimant and respondent</Typography>
         <Typography level="body-sm">Case from <a href={`https://t.me/${caseView?.claimants_socials?.find((value, index) => value?.key == "telegram")?.value}`} target="_blank">{caseView?.claimant_name}</a> against <a href={`https://t.me/${caseView?.respondents_socials?.find((value, index) => value?.key == "telegram")?.value}`} target="_blank">{caseView?.respondents_account}</a>.</Typography>
+        <Typography level="body-sm">Other info on respondent: {caseView?.other_info_about_respondent ? caseView?.other_info_about_respondent : "no info."}</Typography>
 
         <Typography sx={{marginBottom:"-8px"}} level="title-sm">Case description by claimant</Typography>
         <Typography level="body-sm">{caseView?.case_description ? caseView?.case_description : "No info"}</Typography>
@@ -221,6 +234,7 @@ function CaseView() {
 
 
         <Typography sx={{marginBottom:"-8px"}} level="title-sm">Claimant's evidence</Typography>
+        <div className="evidenceChips">
         {caseView?.claimants_ipfs_cids.length > 0 ? 
         caseView?.claimants_ipfs_cids?.map((value, index) => {
         return (
@@ -236,10 +250,12 @@ function CaseView() {
       :
       <Typography level="body-sm">No info</Typography>
       }
+      </div>
       <Typography sx={{marginBottom:"-8px"}} level="title-sm">Claimant's evidence description</Typography>
       <Typography sx={{marginBottom:"-8px"}} level="body-sm">{caseView?.claimants_evidence_description ? caseView?.claimants_evidence_description : "No info"}</Typography>
 
       <Typography sx={{marginBottom:"-8px"}} level="title-sm">Respondent's evidence</Typography>
+      <div className="evidenceChips">
       {caseView?.respondents_ipfs_cids.length > 0 ? 
         caseView?.respondents_ipfs_cids?.map((value, index) => {
         return (
@@ -255,6 +271,7 @@ function CaseView() {
       :
       <Typography level="body-sm">No info</Typography>
       }
+      </div>
         <Typography sx={{marginBottom:"-8px"}} level="title-sm">Respondent's evidence description</Typography>
         <Typography sx={{marginBottom:"-8px"}} level="body-sm">{caseView?.respondents_evidents_description ? caseView?.respondents_evidents_description : "No info"}</Typography>
         
@@ -267,7 +284,7 @@ function CaseView() {
               <div key={value?.key + value?.value}>
                 <a href={`https://t.me/${"consortiumdac"}`} target="_blank" rel="noopener noreferrer">{value?.key}</a> 
                 {value?.value === 1 ? " (accepted)" : " (waiting)"}
-                {index === 0 ? <span> - lead arbitrator </span> : null}
+                {value?.key == caseView?.lead_arbitrator ? <span> - lead arbitrator </span> : null}
               </div>
             );
           })}
@@ -294,7 +311,7 @@ function CaseView() {
         {caseView?.arbitrators?.find((value, index)=> value?.key == accountName && value?.value == 0) && caseView?.stage == 1 ? <Button onClick={()=> rejectToArbitrate()}>Reject to arbitrate</Button> : null}
         {caseView?.arbitrators?.find((value, index)=> value?.key == accountName) && caseView?.stage == 5? <Button onClick={()=>signVerdict()}>Sign Verdict</Button> : null}
 
-        {caseView?.arbitrators[0]?.key == accountName && caseView?.stage == 4 ? <Button key={Number(caseView?.stage) + 3} onClick={()=> setPage("GIVE_VERDICT")}>Give verdict</Button> : null}
+        {caseView?.lead_arbitrator == accountName && caseView?.stage == 4 ? <Button key={Number(caseView?.stage) + 3} onClick={()=> setPage("GIVE_VERDICT")}>Give verdict</Button> : null}
        
         {(caseView?.claimant_name  == accountName && caseView?.stage !== 6) ? <Button onClick={()=>setPage("ADD_EVIDENCE")}>Add evidence</Button> : null}
 

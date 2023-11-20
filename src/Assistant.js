@@ -17,7 +17,7 @@ function Assistant() {
       content: <div>See details about the case. Depending on the state of the case and your relation to it, you can take different actions here.
         <ul>
           <li>If you are the respondent, you can acknowledge the case. If you've acknowledged it, you can counter the case or accept the accusations. If you accept the accusations, the case will be closed and the verdict is the initial claim against you.</li>
-          <li>If you are the claimant...</li>
+          <li>If you are the claimant you are able to view the progress of the case and submit additional evidence in this view.</li>
           <li>If you are an arbitrator for the case, then you have access to the arbitration view.</li>
         </ul>
       </div>
@@ -38,9 +38,17 @@ function Assistant() {
       title: <div>Add community</div>, 
       content: <div>Here you can add a new community to the platform. Add the claim types that your community can use when creating or joining cases.</div>
     },
+    BECOME_ARBITRATOR: {
+      title: <div>Become arbitrator</div>, 
+      content: <div>Currently there is no form for this. Just write us on telegram.</div>
+    },
     GIVE_VERDICT: {
       title: <div>Give verdict</div>, 
       content: <div>As the lead arbitrator, you can now give a verdict. This verdict should be fully discussed and agreed upon with other arbitrators. After giving the verdict, other arbitrators shall sign it in order for the verdict to pass.</div>
+    },
+    ADD_EVIDENCE: {
+      title: <div>Add evidence</div>, 
+      content: <div>As long as the case is open, you can add or remove evidence and edit its description here.</div>
     },
     ACCEPT_CASE: {
       title: <div>Accept accusations</div>, 
@@ -67,7 +75,7 @@ function Assistant() {
         <li><b>Number of arbitrators</b> - this is currently fixed.</li>
         <li><b>Contacts</b> - provide your telegram and the EOS account of the person you are creating a case against. If you have the respondents socials, then please add those.</li>
         <li><b>Proof</b> - you can add attachments to your case. This can be a screenshot, a video, a document, etc. The proof is uploaded to IPFS.</li>
-        <li><b>Deposits</b> - to create a case, deposits must be paid. There is a minimum deposit. You can add a higher deposit.</li>
+        <li><b>Deposits</b> - to create a case, deposits must be paid. There is a minimum deposit. You can add a higher deposit. You also set the deposit for the repospondent that he has to pay after accepting the case. If you win the case you'll receive the deposit back. If respondent wins then he receives his deposit back. Loser pays his deposit to the arbitrators and the app. </li>
         <li><b>Payment</b> - agree with the terms and conditions, and submit the case. The case will be submitted, along with your deposit payment.</li>
       </ul>
       </div>
@@ -81,7 +89,7 @@ function Assistant() {
         aria-describedby="modal-desc"
         open={open}
         onClose={() => setOpen(false)}
-        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', "margin":"5px"}}
       >
         <Sheet
           variant="outlined"

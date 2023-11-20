@@ -144,14 +144,7 @@ body {
 
 
 
-@media screen and (max-width: 600px) {
-  .card{
-    width:80vw;
-  }
-  .contentCard{
-    width:90vw;
-  }
-}
+
 
 
 .loader {
@@ -207,4 +200,23 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+}
+
+.evidenceChips{
+  display:flex;
+  gap:5px;
+  flex-wrap:wrap;
+}
+
+
+@media screen and (max-width: 768px) {
+  .card{
+    width:80vw;
+  }
+  .contentCard{
+    width:90vw;
+  }
+  .allCases{
+    display:none !important;
+  }
 }

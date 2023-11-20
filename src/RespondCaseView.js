@@ -65,11 +65,11 @@ function RespondCaseView() {
   useEffect(()=>{
     setFormData(prevState => ({
       ...prevState,
-      fine_counter: caseView["fine"],
-      relief_counter: caseView["relief"],
+      fine_counter: caseView["fine"]?.map(item => Number(item?.split(" ")[0])?.toFixed(4)),
+      relief_counter: caseView["relief"]?.map(item => Number(item?.split(" ")[0])?.toFixed(4)),
       suspension_counter: caseView["suspension"]
   }));
-  }, [])
+  }, [caseView])
 
   const edit = (index) => {
     setOpen(true)
@@ -116,6 +116,17 @@ function RespondCaseView() {
       console.log(error)
     }
 
+    console.log({
+      case_id: caseView?.case_id,
+      community: community,
+      respondents_response: formData?.description,
+      respondents_ipfs_cids: formData?.ipfsProof,
+      respondents_evidents_description: formData?.evidence_description,
+      fine_counter: formData?.fine_counter.map(item => Number(item).toFixed(4) + " EOS"),
+      relief_counter: formData?.relief_counter.map(item => Number(item).toFixed(4) + " EOS"),
+      suspension_counter: formData?.suspension_counter
+    })
+
     if (activeUser) {
       try {
         let transaction;
@@ -138,8 +149,8 @@ function RespondCaseView() {
                 respondents_response: formData?.description,
                 respondents_ipfs_cids: formData?.ipfsProof,
                 respondents_evidents_description: formData?.evidence_description,
-                fine_counter: formData?.fine_counter,
-                relief_counter: formData?.relief_counter,
+                fine_counter: formData?.fine_counter.map(item => Number(item).toFixed(4) + " EOS"),
+                relief_counter: formData?.relief_counter.map(item => Number(item).toFixed(4) + " EOS"),
                 suspension_counter: formData?.suspension_counter
               },
             },
@@ -161,7 +172,7 @@ function RespondCaseView() {
                 data: {
                   from: accountName,
                   to: "swap.defi",
-                  quantity: (Number(deposittopay) + 0.0020) + " EOS",
+                  quantity: (Number(deposittopay) + 0.0020).toFixed(4) + " EOS",
                   memo: "swap,0,12",
                 },
               },
@@ -198,8 +209,8 @@ function RespondCaseView() {
                   respondents_response: formData?.description,
                   respondents_ipfs_cids: formData?.ipfsProof,
                   respondents_evidents_description: formData?.evidence_description,
-                  fine_counter: formData?.fine_counter,
-                  relief_counter: formData?.relief_counter,
+                  fine_counter: formData?.fine_counter.map(item => Number(item).toFixed(4) + " EOS"),
+                  relief_counter: formData?.relief_counter.map(item => Number(item).toFixed(4) + " EOS"),
                   suspension_counter: formData?.suspension_counter
                 },
               },
@@ -274,9 +285,9 @@ function RespondCaseView() {
             <Sheet className="sheet" sx={{padding:"10px", fontSize:"12px", borderRadius:"10px"}} variant="outlined">
             <b>{caseView.claims[index]}</b>
             <br/>{caseView.fine[index] ? caseView.fine[index] + " fine" : "No fine."}
-            {formData["fine_counter"] && formData["fine_counter"][index] ? " (Counter: " + formData["fine_counter"][index] + ")" : ""}
+            {formData["fine_counter"] && formData["fine_counter"][index] ? " (Counter: " + Number(formData["fine_counter"][index]?.split(" ")[0]).toFixed(4) + " EOS)" : ""}
             <br/>{caseView.relief[index] ? caseView.relief[index] + " relief" : "No relief."}
-            {formData["relief_counter"] && formData["relief_counter"][index] ? " (Counter: " + formData["relief_counter"][index] + ")" : ""}  
+            {formData["relief_counter"] && formData["relief_counter"][index] ? " (Counter: " + Number(formData["relief_counter"][index]?.split(" ")[0]).toFixed(4) + " EOS)" : ""}  
             <br/>{caseView.suspension[index] ? caseView.suspension[index] + " days suspension" : "No suspension"}
             {formData["suspension_counter"] && formData["suspension_counter"][index] ? " (Counter: " + formData["suspension_counter"][index] + " days)" : ""}
             <div className="sheetdelete" onClick={()=>edit(index)}>Respond</div>
@@ -300,7 +311,7 @@ function RespondCaseView() {
             Payment and submission
           </Typography>
           <Typography component="label" sx={{width:"100%"}} >
-            If you haven't paid the deposit, then a payment of {caseView?.deposit_for_respondent} will be made. 
+            A deposit payment of {caseView?.deposit_for_respondent} will be made. 
           </Typography>
           <div className="buttons">
             <Button variant="outlined" sx={{width:"100%"}} onClick={() =>setView("relief")}>Previous</Button>
@@ -340,34 +351,38 @@ function RespondCaseView() {
             overflow: 'auto',
           }}
         >
-          <DialogTitle>Dispute Resolution</DialogTitle>
+          <DialogTitle>Claim: {caseView["claims"][editingIndex]}</DialogTitle>
           <ModalClose />
           <DialogContent sx={{ gap: 2 }}>
+        <Typography level="title-sm" sx={{width:"100%", marginBottom:"-8px"}}>Claimed fine: {caseView["fine"][editingIndex]}</Typography>
         <Input
-          placeholder="Requested fine amount"
+          placeholder="Your counter fine amount"
           startDecorator={'EOS'}
           sx={{width:"100%"}}
           onChange={(e, value) => handleCounterChange(e)}
           name="fine_counter"
-          value={formData?.fine_counter ? formData?.fine_counter[editingIndex] : ""}
-
+          value={formData?.fine_counter[editingIndex]}
+          type="number"
         />
+        <Typography level="title-sm" sx={{width:"100%", marginBottom:"-8px"}}>Claimed relief: {caseView["relief"][editingIndex]}</Typography>
         <Input
-          placeholder="Requested relief amount"
+          placeholder="Your counter relief amount"
           startDecorator={'EOS'}
           sx={{width:"100%"}}
           onChange={(e, value) => handleCounterChange(e)}
           name="relief_counter"
-          value={formData?.relief_counter ? formData?.relief_counter[editingIndex] : ""}
-
+          value={formData?.relief_counter[editingIndex]}
+          type="number"
         />
+        <Typography level="title-sm" sx={{width:"100%", marginBottom:"-8px"}}>Claimed suspension: {caseView["suspension"][editingIndex]}</Typography>
         <Input
-          placeholder="Requested supension time"
+          placeholder="Your counter supension time"
           startDecorator={'Days'}
           sx={{width:"100%"}}
           onChange={(e, value) => handleCounterChange(e)}
           name="suspension_counter"
-          value={formData?.suspension_counter ? formData?.suspension_counter[editingIndex] : ""}
+          value={formData?.suspension_counter[editingIndex]}
+          type="number"
         />
 
         <Button sx={{width:"100%"}} onClick={()=>setOpen(false)}>Counter claim</Button>

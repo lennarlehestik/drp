@@ -218,6 +218,7 @@ function JoinClaim() {
   }
 
   const addNewClaim = () => {
+    if(formData.newClaimType && formData.newFine && formData.newRelief && formData.newSuspension){
     // Create a new claim object from the temporary formData fields
     const newClaim = {
         claimtype: formData.newClaimType,
@@ -235,6 +236,10 @@ function JoinClaim() {
         newRelief: "",
         newSuspension: ""
     }));
+    }
+    else{
+      sweetalert("Please fill all fields for the claim.")
+    }
 }
 
   const updateClaim = (index, field, value) => {

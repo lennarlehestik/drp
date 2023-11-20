@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { UALProvider } from 'ual-reactjs-renderer'
 import { Anchor } from 'ual-anchor'
+import { Wombat } from 'ual-wombat'
 
 const appName = "DRP";
 
@@ -23,9 +24,12 @@ const anchor = new Anchor([chain], {
   appName,
 });
 
+const wombat = new Wombat([chain], { appName: appName })
+
+
 const supportedChains = [chain];
 const supportedAuthenticators = [
-  anchor
+  anchor, wombat
 ];
 
 

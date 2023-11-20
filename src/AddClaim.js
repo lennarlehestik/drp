@@ -104,8 +104,15 @@ function AddClaim() {
     console.log(              {
       from: accountName,
       to: "drpappdrpapp",
-      quantity: "1.0000 EOS",
+      quantity: Number(formData?.depositamount).toFixed(4) + " USDT",
       memo: '5555,' + community
+    })
+
+    console.log(              {
+      from: accountName,
+      to: "swap.defi",
+      quantity: (Number(deposittopay) + 0.0010).toFixed(4) + " EOS",
+      memo: "swap,0,12",
     })
 
     console.log(              {
@@ -115,8 +122,8 @@ function AddClaim() {
       nr_of_requested_arbitrators: 3,
       case_description: formData?.description,
       claims: formData?.claims.map(item => item.claimtype),
-      fine: formData?.claims.map(item => handleFormatNumber(item.fine)),
-      relief: formData?.claims.map(item => handleFormatNumber(item.relief)),
+      fine: formData?.claims.map(item => Number(item.fine).toFixed(4) + " EOS"),
+      relief: formData?.claims.map(item => Number(item.relief).toFixed(4) + " EOS"),
       suspension: formData?.claims.map(item => Number(item.suspension)),
       request_ban: formData?.banselected,
       claimants_evidence_description: formData?.evidenceDescription,
@@ -125,7 +132,7 @@ function AddClaim() {
       respondents_socials:[{key:"telegram", value:formData?.respondents_telegram}],
       respondents_account: formData?.respondents_account,
       other_info_about_respondent:formData?.other_info,
-      deposit_for_respondent:formData?.deposit_for_respondent
+      deposit_for_respondent:Number(formData?.deposit_for_respondent).toFixed(4) + " USDT"
     })
     if (activeUser) {
       
@@ -221,6 +228,7 @@ function AddClaim() {
 
   const addNewClaim = () => {
     // Create a new claim object from the temporary formData fields
+    if(formData.newClaimType && formData.newFine && formData.newRelief && formData.newSuspension){
     const newClaim = {
         claimtype: formData.newClaimType,
         fine: formData.newFine,
@@ -237,6 +245,10 @@ function AddClaim() {
         newRelief: "",
         newSuspension: ""
     }));
+    }
+    else{
+      sweetalert("Please fill all fields for the claim.")
+    }
 }
 
   const updateClaim = (index, field, value) => {

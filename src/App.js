@@ -99,8 +99,9 @@ function App(props) {
             body: JSON.stringify({
               json: true,
               code: "drpappdrpapp",
-              table: "casestb",
+              table: "casestbbb",
               scope: community,
+              limit:1000
             }),
             headers: {
               'Content-Type': 'application/json',
@@ -188,7 +189,7 @@ function App(props) {
             body: JSON.stringify({
               json: true,
               code: "drpappdrpapp",
-              table: "configtb",
+              table: "configtbb",
               scope: "drpappdrpapp",
             }),
             headers: {
@@ -253,7 +254,7 @@ function App(props) {
             body: JSON.stringify({
               json: true,
               code: "drpappdrpapp",
-              table: "configtb",
+              table: "configtbb",
               scope: "drpappdrpapp",
               lower_bound: community,
               upper_bound: community
@@ -294,6 +295,7 @@ function App(props) {
             code: "drpappdrpapp",
             table: "commstb",
             scope: "drpappdrpapp",
+            limit:1000
           }),
           headers: {
             'Content-Type': 'application/json',
@@ -329,6 +331,7 @@ function App(props) {
       <div className="App">
       <Assistant />
       <div className = "navigation">
+      <Button color="neutral" className="allCases" variant="outlined" onClick={() => setPage("ALL_CASES")}>All Cases</Button>
       <PickCommunity />
       <Cases />
       <DrawerFilters/>

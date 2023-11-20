@@ -22,12 +22,12 @@ function Cases() {
                 </div>
                 <div className="sponsorName">
                     <div className="broughtBy">Built by</div>
-                    <div className="upscale">Upscale on EOSIO</div>
+                    <div className="upscale">Upscale on Antelope</div>
                 </div>
             </div>
             <div className="heading">Dispute Resolution Process</div>
             <div className="explainer">DRP is a governance tool to resolve disputes amongst members of <span className="textHighlight">any community on Antelope network</span>.</div>
-            <button className="loginButton" onClick={()=>showModal()}><img src="/eosfilledlogowhite.png" width="32px" style={{marginRight:"7px"}}/><span>Open app</span></button>
+            <button className="loginButton" onClick={()=>showModal()}><span>Open app</span></button>
             </div>
         <div className="rightSide">
         <iframe className="demo" src="https://www.youtube.com/embed/eEzD-Y97ges" title="Placeholder Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>

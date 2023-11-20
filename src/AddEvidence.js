@@ -127,7 +127,8 @@ const handleInputChange = (event) => {
 
 
   return (
-    <Card sx={{width:"50vw"}}>
+    <div className="contentCard">
+    <Card>
         <Typography level="title-lg" sx={{width:"100%"}}>
           Add evidence to case
         </Typography>
@@ -171,6 +172,7 @@ const handleInputChange = (event) => {
       <Button sx={{width:"100%"}} onClick={() =>addEvidence()}>Add Evidence</Button>
 
       </Card>
+      </div>
   );
 };
 
