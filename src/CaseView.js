@@ -300,6 +300,29 @@ function CaseView() {
                 <Typography level="body-sm" sx={{lineHeight:"12px"}}>{caseView?.suspension_verdict[0]} day suspension</Typography>
           </Card>
           </div>
+          <Typography sx={{marginBottom:"-8px"}} level="title-sm">Verdict files</Typography>
+        <div className="evidenceChips">
+        {caseView?.ipfs_cid_verdict.length > 0 ? 
+          caseView?.ipfs_cid_verdict?.map((value, index) => {
+          return (
+            <Tooltip title={"IPFS CID: " + value} variant="outlined" sx={{fontSize:"13px"}}>
+            <Chip variant="outlined">
+              <a href={`https://gateway.pinata.cloud/ipfs/${value}`} style={{textDecoration:"none"}} target="_blank">
+                Proof link {index + 1}
+              </a>
+            </Chip>
+            </Tooltip>
+          );
+        })
+        :
+        <Typography level="body-sm">No info</Typography>
+        }
+        </div>
+          <Typography sx={{marginBottom:"-8px"}} level="title-sm">Verdict description</Typography>
+          <Typography sx={{marginBottom:"-8px"}} level="body-sm">{caseView?.verdict_description ? caseView?.verdict_description : "No info"}</Typography>
+          <Typography sx={{marginBottom:"-8px"}} level="title-sm">Verdict for ban</Typography>
+          <Typography sx={{marginBottom:"-8px"}} level="body-sm">{caseView?.ban_verdict == 0 ? "No ban" : "Ban"}</Typography>
+          
         </>
         :
         null
